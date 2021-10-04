@@ -24,13 +24,13 @@ container{
     flex-flow: row wrap;
     flex-wrap: wrap;
     gap: 5px;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
 .items{
     display: block;
-    flex: 1 2 auto;
+    flex: 1 0 320px;
     height: 240px;
     width: 320px;
     border: 1px solid blue;
@@ -45,15 +45,15 @@ container{
     height: 100%;
     object-fit: cover;
     
-    transition: 3s transform;
+    filter: blur(1px);
 }
 
 .items > img:hover{
-    transition: 0.5s;
+    transition: .5s;
     transition-property: filter;
     
-    filter: blur(0px);
-    transform: scale(1.2);
+
+    filter: none;
     z-index: 2;
 }
 
