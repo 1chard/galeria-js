@@ -15,7 +15,16 @@ main{
     flex: 1 0 auto;
     padding: 15px;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-self: center;
+}
+
+.pesquisa{
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    font-size: 3em;
 }
 
 container{

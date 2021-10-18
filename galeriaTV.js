@@ -1,8 +1,10 @@
 "use strict";
 //<a href="#8" class="items"><img src="img/PT.jpg" alt=""></a>
 
-const pesquisarImagens = async (raca = '') => {
-    const json = await fetch(`https://dog.ceo/api/breed/${raca}/images`).then(r => r.json())
+const pesquisarImagens = async (texto = '') => {
+    const json = await fetch(`https://api.tvmaze.com/search/shows?q=${texto}`).then(r => r.json())
+
+    console.log(json)
 
     let xx
 
@@ -12,8 +14,8 @@ const pesquisarImagens = async (raca = '') => {
     while( (xx = document.querySelector('.slide-container').lastChild) ?? false )
         xx.remove();
 
-    carregarGaleria(json.message)
-    carregarSlide(json.message)
+    carregarGaleria(json)
+    carregarSlide(json)
 }
 
 const listarRacas = async () => {
@@ -43,13 +45,13 @@ const obterId = (string = '') =>
     string.substring(string.lastIndexOf('/') + 1, string.lastIndexOf('.'));
 
 
-const criarItem = url => {
+const criarItem = json => {
     const content = document.querySelector('container')
 
     const novoLink = document.createElement('a')
-    novoLink.href = '#' + obterId(url)
+    novoLink.href = '#' + obterId(json.show.image.original)
     novoLink.classList.add("items")
-    novoLink.innerHTML = `<img src="${url}" alt="">`
+    novoLink.innerHTML = `<img src="${json.show.image.original}" alt="">`
 
     content.appendChild(novoLink)
 }
@@ -65,7 +67,7 @@ const carregarGaleria = imgs => imgs.forEach(criarItem);
         </slide>
  */
 
-const criarSlide = (url, indice, array) => {
+const criarSlide = (json, indice, array) => {
     const content = document.querySelector('.slide-container')
 
     const idAnterior = obterId(
@@ -76,10 +78,10 @@ const criarSlide = (url, indice, array) => {
     );
 
     const novoLink = document.createElement('slide')
-    novoLink.id = obterId(url);
+    novoLink.id = obterId(json.show.image.original);
     novoLink.innerHTML = `<a href="" class="sair">&#128473;</a>
             <a href="#${idAnterior}" class="voltar navega"><<</a>
-            <img src="${url}">
+            <img src="${json.show.image.original}">
             <a href="#${idProximo}" class="ir navega">>></a>`;
 
 
@@ -87,7 +89,7 @@ const criarSlide = (url, indice, array) => {
 }
 
 const carregarSlide = imgs => imgs.forEach(criarSlide)
-listarRacas()
+//listarRacas()
 
 document.querySelector('.pesquisa>input').addEventListener('change', e => {
     pesquisarImagens(e.target.value)
